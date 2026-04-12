@@ -1,7 +1,311 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
 
+/* ═══════════════════════════════════════════════════════════
+   RAW PALETTE
+   All primitive color values. Referenced by semantic tokens.
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Ruby scale (anchored at #CC342D — official Ruby language logo red) ── */
+  --ruby-50:  #fff1f1;
+  --ruby-100: #ffe0df;
+  --ruby-200: #ffc4c2;
+  --ruby-300: #ff9591;
+  --ruby-400: #f85d5a;
+  --ruby-500: #e8302a;
+  --ruby-600: #cc342d; /* Ruby logo red */
+  --ruby-700: #a8261f;
+  --ruby-800: #8b1c15;
+  --ruby-900: #72180f;
+  --ruby-950: #3f0905;
+
+  /* ── Amber scale (warm East African accent / CTA) ── */
+  --amber-50:  #fffbeb;
+  --amber-100: #fef3c7;
+  --amber-200: #fde68a;
+  --amber-300: #fcd34d;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --amber-700: #b45309;
+  --amber-800: #92400e;
+  --amber-900: #78350f;
+  --amber-950: #451a03;
+
+  /* ── Slate neutrals ── */
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SEMANTIC TOKENS — Light mode (default)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Primary (Ruby red) */
+  --color-primary:            var(--ruby-600);
+  --color-primary-hover:      var(--ruby-700);
+  --color-primary-active:     var(--ruby-800);
+  --color-primary-subtle:     var(--ruby-50);
+  --color-primary-muted:      var(--ruby-100);
+  --color-primary-foreground: #ffffff;
+
+  /* Accent (Amber / warm gold) */
+  --color-accent:             var(--amber-500);
+  --color-accent-hover:       var(--amber-600);
+  --color-accent-foreground:  var(--slate-900);
+
+  /* Surfaces */
+  --color-bg:                 #ffffff;
+  --color-bg-subtle:          var(--slate-50);
+  --color-bg-muted:           var(--slate-100);
+  --color-card:               #ffffff;
+  --color-card-hover:         var(--slate-50);
+  --color-overlay:            rgba(15, 23, 42, 0.55);
+
+  /* Foreground / Text */
+  --color-foreground:         var(--slate-900);
+  --color-foreground-muted:   var(--slate-600);
+  --color-foreground-subtle:  var(--slate-400);
+  --color-foreground-inverse: #ffffff;
+
+  /* Borders */
+  --color-border:             var(--slate-200);
+  --color-border-strong:      var(--slate-300);
+  --color-border-muted:       var(--slate-100);
+
+  /* Focus ring */
+  --color-ring:               var(--ruby-300);
+  --color-ring-offset:        #ffffff;
+
+  /* ── Status: Success ── */
+  --color-success:            #16a34a;
+  --color-success-hover:      #15803d;
+  --color-success-bg:         #f0fdf4;
+  --color-success-border:     #bbf7d0;
+  --color-success-foreground: #15803d;
+
+  /* ── Status: Warning ── */
+  --color-warning:            #d97706;
+  --color-warning-hover:      #b45309;
+  --color-warning-bg:         #fffbeb;
+  --color-warning-border:     #fde68a;
+  --color-warning-foreground: #b45309;
+
+  /* ── Status: Error ── */
+  --color-error:              #dc2626;
+  --color-error-hover:        #b91c1c;
+  --color-error-bg:           #fef2f2;
+  --color-error-border:       #fecaca;
+  --color-error-foreground:   #b91c1c;
+
+  /* ── Status: Info ── */
+  --color-info:               #0284c7;
+  --color-info-hover:         #0369a1;
+  --color-info-bg:            #f0f9ff;
+  --color-info-border:        #bae6fd;
+  --color-info-foreground:    #0369a1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SEMANTIC TOKENS — Dark mode overrides
+   ═══════════════════════════════════════════════════════════ */
+.dark {
+  /* Primary (brighter ruby for dark surfaces) */
+  --color-primary:            var(--ruby-400);
+  --color-primary-hover:      var(--ruby-300);
+  --color-primary-active:     var(--ruby-200);
+  --color-primary-subtle:     var(--ruby-950);
+  --color-primary-muted:      var(--ruby-900);
+
+  /* Accent */
+  --color-accent:             var(--amber-400);
+  --color-accent-hover:       var(--amber-300);
+  --color-accent-foreground:  var(--slate-900);
+
+  /* Surfaces */
+  --color-bg:                 var(--slate-950);
+  --color-bg-subtle:          var(--slate-900);
+  --color-bg-muted:           var(--slate-800);
+  --color-card:               var(--slate-900);
+  --color-card-hover:         var(--slate-800);
+  --color-overlay:            rgba(0, 0, 0, 0.65);
+
+  /* Foreground / Text */
+  --color-foreground:         var(--slate-50);
+  --color-foreground-muted:   var(--slate-400);
+  --color-foreground-subtle:  var(--slate-600);
+
+  /* Borders */
+  --color-border:             var(--slate-800);
+  --color-border-strong:      var(--slate-700);
+  --color-border-muted:       var(--slate-900);
+
+  /* Focus ring */
+  --color-ring:               var(--ruby-700);
+  --color-ring-offset:        var(--slate-950);
+
+  /* Status backgrounds lighten slightly in dark mode */
+  --color-success-bg:         rgba(22, 163, 74, 0.12);
+  --color-success-border:     rgba(22, 163, 74, 0.3);
+
+  --color-warning-bg:         rgba(217, 119, 6, 0.12);
+  --color-warning-border:     rgba(217, 119, 6, 0.3);
+
+  --color-error-bg:           rgba(220, 38, 38, 0.12);
+  --color-error-border:       rgba(220, 38, 38, 0.3);
+
+  --color-info-bg:            rgba(2, 132, 199, 0.12);
+  --color-info-border:        rgba(2, 132, 199, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAILWIND v4 THEME REGISTRATION
+   Exposes all semantic tokens as Tailwind utility classes.
+   `inline` keeps them as CSS variables (dark mode works).
+   ═══════════════════════════════════════════════════════════ */
+@theme inline {
+  /* Raw ruby palette → bg-ruby-{n}, text-ruby-{n}, etc. */
+  --color-ruby-50:  var(--ruby-50);
+  --color-ruby-100: var(--ruby-100);
+  --color-ruby-200: var(--ruby-200);
+  --color-ruby-300: var(--ruby-300);
+  --color-ruby-400: var(--ruby-400);
+  --color-ruby-500: var(--ruby-500);
+  --color-ruby-600: var(--ruby-600);
+  --color-ruby-700: var(--ruby-700);
+  --color-ruby-800: var(--ruby-800);
+  --color-ruby-900: var(--ruby-900);
+  --color-ruby-950: var(--ruby-950);
+
+  /* Raw amber palette → bg-amber-{n}, etc. */
+  --color-amber-50:  var(--amber-50);
+  --color-amber-100: var(--amber-100);
+  --color-amber-200: var(--amber-200);
+  --color-amber-300: var(--amber-300);
+  --color-amber-400: var(--amber-400);
+  --color-amber-500: var(--amber-500);
+  --color-amber-600: var(--amber-600);
+  --color-amber-700: var(--amber-700);
+  --color-amber-800: var(--amber-800);
+  --color-amber-900: var(--amber-900);
+  --color-amber-950: var(--amber-950);
+
+  /* Semantic → bg-primary, text-primary, border-primary, etc. */
+  --color-primary:            var(--color-primary);
+  --color-primary-hover:      var(--color-primary-hover);
+  --color-primary-active:     var(--color-primary-active);
+  --color-primary-subtle:     var(--color-primary-subtle);
+  --color-primary-muted:      var(--color-primary-muted);
+  --color-primary-foreground: var(--color-primary-foreground);
+
+  --color-accent:             var(--color-accent);
+  --color-accent-hover:       var(--color-accent-hover);
+  --color-accent-foreground:  var(--color-accent-foreground);
+
+  --color-bg:                 var(--color-bg);
+  --color-bg-subtle:          var(--color-bg-subtle);
+  --color-bg-muted:           var(--color-bg-muted);
+  --color-card:               var(--color-card);
+  --color-card-hover:         var(--color-card-hover);
+
+  --color-foreground:         var(--color-foreground);
+  --color-foreground-muted:   var(--color-foreground-muted);
+  --color-foreground-subtle:  var(--color-foreground-subtle);
+  --color-foreground-inverse: var(--color-foreground-inverse);
+
+  --color-border:             var(--color-border);
+  --color-border-strong:      var(--color-border-strong);
+  --color-border-muted:       var(--color-border-muted);
+
+  --color-ring:               var(--color-ring);
+
+  --color-success:            var(--color-success);
+  --color-success-bg:         var(--color-success-bg);
+  --color-success-border:     var(--color-success-border);
+  --color-success-foreground: var(--color-success-foreground);
+
+  --color-warning:            var(--color-warning);
+  --color-warning-bg:         var(--color-warning-bg);
+  --color-warning-border:     var(--color-warning-border);
+  --color-warning-foreground: var(--color-warning-foreground);
+
+  --color-error:              var(--color-error);
+  --color-error-bg:           var(--color-error-bg);
+  --color-error-border:       var(--color-error-border);
+  --color-error-foreground:   var(--color-error-foreground);
+
+  --color-info:               var(--color-info);
+  --color-info-bg:            var(--color-info-bg);
+  --color-info-border:        var(--color-info-border);
+  --color-info-foreground:    var(--color-info-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMPONENT UTILITY CLASSES
+   Global classes applied by Angular directives (e.g. routerLinkActive)
+   that cannot be scoped inside component encapsulation.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Applied by routerLinkActive on nav links */
+.nav-link-active {
+  color: var(--color-primary) !important;
+  background-color: var(--color-primary-subtle) !important;
+}
+
+/* Mobile menu entrance animation */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 180ms ease-out both;
+}
+
+/* Skip-to-content link (screen readers / keyboard users) */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-to-content:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  outline: 2px solid var(--color-primary-foreground);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL RESETS & BASE STYLES
+   ═══════════════════════════════════════════════════════════ */
 *,
 *::before,
 *::after {
@@ -14,4 +318,24 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Respect user motion preferences (ui-ux-pro-max: reduced-motion rule) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Code / monospace blocks use Space Mono */
+code,
+kbd,
+pre,
+samp {
+  font-family: 'Space Mono', ui-monospace, 'Cascadia Code', monospace;
 }

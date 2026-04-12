@@ -1,0 +1,115 @@
+<section
+  aria-labelledby="hero-heading"
+  class="relative overflow-hidden bg-bg"
+>
+  <!-- Subtle background grid -->
+  <div
+    class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-40"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Ruby glow blob -->
+  <div
+    class="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full bg-primary opacity-[0.06] blur-3xl"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <div class="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+
+      <!-- ── Left: copy ── -->
+      <div class="space-y-8">
+        <!-- Headline -->
+        <h1
+          id="hero-heading"
+          class="text-5xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+          style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
+        >
+          Where&nbsp;Kisumu's<br />
+          <span class="text-primary">Ruby</span>&nbsp;Developers<br />
+          Thrive
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="max-w-lg text-lg leading-relaxed text-foreground-muted sm:text-xl">
+          Kisumu's community of Ruby and Rails developers.
+          We learn together, build real things, and grow the tech
+          ecosystem of Western Kenya, one gem at a time.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            routerLink="/contact"
+            class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Join the Community
+            <lucide-angular [img]="arrowRightIcon" class="h-4 w-4" aria-hidden="true" />
+          </a>
+
+          <!--<a
+            routerLink="/events"
+            class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-bg px-6 py-3 text-sm font-semibold text-foreground hover:border-border-strong hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <lucide-angular [img]="calendarIcon" class="h-4 w-4 text-foreground-muted" aria-hidden="true" />
+            Explore Events
+          </a>-->
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-x-8 gap-y-4 border-t border-border pt-8">
+          @for (stat of stats; track stat.label) {
+            <div>
+              <p
+                class="text-3xl font-bold text-foreground tabular-nums"
+                style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
+              >
+                {{ stat.value }}
+              </p>
+              <p class="mt-0.5 text-sm text-foreground-muted">{{ stat.label }}</p>
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <!-- ── Right: code card ── -->
+      <div class="hidden lg:block" aria-hidden="true">
+        <div class="rounded-2xl border border-border bg-slate-950 shadow-2xl overflow-hidden">
+
+          <!-- Window chrome -->
+          <div class="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+            <span class="h-3 w-3 rounded-full bg-red-500/80"></span>
+            <span class="h-3 w-3 rounded-full bg-yellow-500/80"></span>
+            <span class="h-3 w-3 rounded-full bg-green-500/80"></span>
+            <span class="ml-3 text-xs text-white/30 font-mono">kisumu_ruby.rb</span>
+          </div>
+
+          <!-- Code -->
+          <pre class="overflow-x-auto p-6 text-sm leading-relaxed font-mono" role="presentation"><code><span class="text-slate-500"># Kisumu Ruby Community</span>
+<span class="text-slate-500"># Kisumu, Kenya — est. 2026</span>
+
+<span class="text-violet-400">class</span> <span class="text-amber-300">KisumuRuby</span>
+  <span class="text-violet-400">attr_reader</span> <span class="text-sky-300">:members</span><span class="text-white">,</span> <span class="text-sky-300">:city</span>
+
+  <span class="text-violet-400">def</span> <span class="text-emerald-400">initialize</span>
+    <span class="text-sky-300">@city</span>    <span class="text-white">=</span> <span class="text-orange-300">"Kisumu, Kenya"</span>
+    <span class="text-sky-300">@members</span> <span class="text-white">=</span> <span class="text-amber-300">1</span><span class="text-white">.</span><span class="text-emerald-400">+</span>
+    <span class="text-sky-300">@stack</span>   <span class="text-white">=</span> <span class="text-white">[</span><span class="text-sky-300">:ruby</span><span class="text-white">,</span> <span class="text-sky-300">:rails</span><span class="text-white">]</span>
+  <span class="text-violet-400">end</span>
+
+  <span class="text-violet-400">def</span> <span class="text-emerald-400">join!</span>
+    <span class="text-orange-300">"Welcome to the community!"</span>
+  <span class="text-violet-400">end</span>
+<span class="text-violet-400">end</span>
+
+<span class="text-slate-500"># You belong here.</span>
+<span class="text-amber-300">KisumuRuby</span><span class="text-white">.</span><span class="text-emerald-400">new</span><span class="text-white">.</span><span class="text-emerald-400">join!</span>
+<span class="text-slate-500">#=> "Welcome to the community!"</span></code></pre>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

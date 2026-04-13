@@ -1,0 +1,128 @@
+<!-- ── Origin Story ── -->
+<section aria-labelledby="about-heading" class="relative overflow-hidden bg-bg">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-40"
+    aria-hidden="true"
+  ></div>
+  <div class="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+      <!-- Left: copy -->
+      <div>
+        <h1
+          id="about-heading"
+          class="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-6"
+          style="font-family: 'JetBrains Mono', 'Space Mono', monospace"
+        >
+          Built in Kisumu,<br />
+          <span class="text-primary">for Kisumu.</span>
+        </h1>
+        <p class="text-lg leading-relaxed text-foreground-muted sm:text-xl">
+          The Kisumu Ruby Community was founded in 2026 by a small group of Ruby developers who
+          wanted more than online tutorials. They wanted a local space to learn, build, and grow
+          together. What started as informal meetups has grown into a thriving community of
+          engineers, students, and entrepreneurs united by a love for Ruby and Rails.
+        </p>
+        <p class="mt-4 text-lg leading-relaxed text-foreground-muted sm:text-xl">
+          Our mission is simple: grow the Ruby ecosystem in Western Kenya by creating opportunities
+          for developers at every level to connect, collaborate, and ship real software.
+        </p>
+      </div>
+      <!-- Right: mission card -->
+      <div class="rounded-2xl border border-border bg-slate-950 p-8 lg:p-10" aria-hidden="true">
+        <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-4 font-mono">
+          # mission.rb
+        </p>
+        <blockquote class="text-2xl font-semibold leading-snug text-white font-mono">
+          "Learn together.<br /><br />Build real things.<br /><br />Grow the ecosystem."
+        </blockquote>
+        <p class="mt-6 text-sm text-slate-400 font-mono">— Kisumu Ruby Community, est. 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Core Values ── -->
+<section aria-labelledby="values-heading" class="bg-bg-subtle border-t border-border">
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <h2
+      id="values-heading"
+      class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl mb-10"
+      style="font-family: 'JetBrains Mono', 'Space Mono', monospace"
+    >
+      Our Values
+    </h2>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      @for (value of values; track value.title) {
+        <div class="rounded-xl border border-border bg-bg p-6">
+          <h3 class="text-base font-semibold text-foreground mb-2">{{ value.title }}</h3>
+          <p class="text-sm leading-relaxed text-foreground-muted">{{ value.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── Organizers ── -->
+<section aria-labelledby="team-heading" class="bg-bg border-t border-border">
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <h2
+      id="team-heading"
+      class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl mb-10"
+      style="font-family: 'JetBrains Mono', 'Space Mono', monospace"
+    >
+      Leadership
+    </h2>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (person of organizers; track person.name) {
+        <div class="rounded-xl border border-border bg-bg p-6 flex flex-col gap-4">
+          <div
+            class="h-14 w-14 rounded-full bg-primary-muted flex items-center justify-center text-primary font-bold text-lg"
+            aria-hidden="true"
+          >
+            {{ person.initials }}
+          </div>
+          <div>
+            <p class="font-semibold text-foreground">{{ person.name }}</p>
+            <p class="text-sm text-primary">{{ person.role }}</p>
+          </div>
+          <p class="text-sm leading-relaxed text-foreground-muted flex-1">{{ person.bio }}</p>
+          <div class="flex gap-3">
+            @if (person.github) {
+              <a
+                [href]="person.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-foreground-muted hover:text-foreground transition-colors"
+                aria-label="GitHub profile"
+              >
+                <lucide-angular [img]="githubIcon" class="h-4 w-4" aria-hidden="true" />
+              </a>
+            }
+            @if (person.linkedin) {
+              <a
+                [href]="person.linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-foreground-muted hover:text-foreground transition-colors"
+                aria-label="LinkedIn profile"
+              >
+                <lucide-angular [img]="linkedinIcon" class="h-4 w-4" aria-hidden="true" />
+              </a>
+            }
+            @if (person.twitter) {
+              <a
+                [href]="person.twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-foreground-muted hover:text-foreground transition-colors"
+                aria-label="Twitter profile"
+              >
+                <lucide-angular [img]="twitterIcon" class="h-4 w-4" aria-hidden="true" />
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

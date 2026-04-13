@@ -15,10 +15,16 @@ interface Stat {
   label: string;
 }
 
-interface CodeLine {
+interface CodeSegment {
   text: string;
   class: string;
 }
+
+function seg(text: string, cls: string): CodeSegment {
+  return { text, class: cls };
+}
+
+const NL: CodeSegment = { text: '\n', class: '' };
 
 @Component({
   selector: 'app-home',
@@ -45,36 +51,35 @@ export class HomeComponent implements OnInit, OnDestroy {
     // { value: '1+', label: 'Years active' },
   ];
 
-  protected typedLines: CodeLine[] = [];
-  private fullCode: CodeLine[] = [
-    { text: '# Kisumu Ruby Community', class: 'text-slate-500' },
-    { text: '# Kisumu, Kenya — est. 2026', class: 'text-slate-500' },
-    { text: '', class: '' },
-    { text: 'class KisumuRuby', class: 'text-violet-400' },
-    { text: '  attr_reader :members, :city', class: 'text-sky-300' },
-    { text: '', class: '' },
-    { text: '  def initialize', class: 'text-emerald-400' },
-    { text: '    @city    = "Kisumu, Kenya"', class: 'text-sky-300' },
-    { text: '    @members = 1.+', class: 'text-sky-300' },
-    { text: '    @stack   = [:ruby, :rails]', class: 'text-sky-300' },
-    { text: '  end', class: 'text-emerald-400' },
-    { text: '', class: '' },
-    { text: '  def join!', class: 'text-emerald-400' },
-    { text: '    "Welcome to the community!"', class: 'text-orange-300' },
-    { text: '  end', class: 'text-emerald-400' },
-    { text: 'end', class: 'text-violet-400' },
-    { text: '', class: '' },
-    { text: '# You belong here.', class: 'text-slate-500' },
-    { text: 'KisumuRuby.new.join!', class: 'text-amber-300' },
-    { text: '#=> "Welcome to the community!"', class: 'text-slate-500' },
+  protected typedSegments: CodeSegment[] = [];
+  private fullSegments: CodeSegment[] = [
+    seg('# Kisumu Ruby Community', 'text-slate-500'), NL,
+    seg('# Kisumu, Kenya — est. 2026', 'text-slate-500'), NL,
+    NL,
+    seg('class', 'text-violet-400'), seg(' ', 'text-white'), seg('KisumuRuby', 'text-amber-300'), NL,
+    seg('  ', 'text-white'), seg('attr_reader', 'text-violet-400'), seg(' ', 'text-white'), seg(':members', 'text-sky-300'), seg(', ', 'text-white'), seg(':city', 'text-sky-300'), NL,
+    NL,
+    seg('  ', 'text-white'), seg('def', 'text-violet-400'), seg(' ', 'text-white'), seg('initialize', 'text-emerald-400'), NL,
+    seg('    ', 'text-white'), seg('@city', 'text-sky-300'), seg('    = ', 'text-white'), seg('"Kisumu, Kenya"', 'text-orange-300'), NL,
+    seg('    ', 'text-white'), seg('@members', 'text-sky-300'), seg(' = ', 'text-white'), seg('1', 'text-amber-300'), seg('.', 'text-white'), seg('+', 'text-emerald-400'), NL,
+    seg('    ', 'text-white'), seg('@stack', 'text-sky-300'), seg('   = [', 'text-white'), seg(':ruby', 'text-sky-300'), seg(', ', 'text-white'), seg(':rails', 'text-sky-300'), seg(']', 'text-white'), NL,
+    seg('  ', 'text-white'), seg('end', 'text-violet-400'), NL,
+    NL,
+    seg('  ', 'text-white'), seg('def', 'text-violet-400'), seg(' ', 'text-white'), seg('join!', 'text-emerald-400'), NL,
+    seg('    ', 'text-white'), seg('"Welcome to the community!"', 'text-orange-300'), NL,
+    seg('  ', 'text-white'), seg('end', 'text-violet-400'), NL,
+    seg('end', 'text-violet-400'), NL,
+    NL,
+    seg('# You belong here.', 'text-slate-500'), NL,
+    seg('KisumuRuby', 'text-amber-300'), seg('.', 'text-white'), seg('new', 'text-emerald-400'), seg('.', 'text-white'), seg('join!', 'text-emerald-400'), NL,
+    seg('#=> "Welcome to the community!"', 'text-slate-500'),
   ];
 
   private readonly charDelay = 60;
   private readonly lineDelays = { empty: 200, keyword: 400, comment: 150, default: 80 };
 
-  private currentLineIndex = 0;
+  private currentSegIndex = 0;
   private currentCharIndex = 0;
-  private typingInterval: ReturnType<typeof setInterval> | null = null;
   protected isTypingComplete = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -83,67 +88,61 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.startTyping();
   }
 
-  ngOnDestroy(): void {
-    if (this.typingInterval) {
-      clearInterval(this.typingInterval);
-    }
-  }
+  ngOnDestroy(): void {}
 
   private startTyping(): void {
     const typeNextChar = () => {
-      if (this.isTypingComplete) return;
-
-      const currentLineText = this.fullCode[this.currentLineIndex]?.text || '';
-
-      if (currentLineText === '') {
-        this.typedLines = [...this.typedLines, { text: '', class: '' }];
-        this.currentLineIndex++;
-        this.currentCharIndex = 0;
+      if (this.currentSegIndex >= this.fullSegments.length) {
+        this.isTypingComplete = true;
         this.cdr.markForCheck();
-        if (this.currentLineIndex < this.fullCode.length) {
-          setTimeout(() => typeNextChar(), this.getDelayForLine(this.currentLineIndex));
-        } else {
-          this.isTypingComplete = true;
-        }
         return;
       }
 
-      if (this.currentCharIndex < currentLineText.length) {
-        const currentLine = this.typedLines[this.currentLineIndex] || { text: '', class: this.fullCode[this.currentLineIndex].class };
-        const newText = currentLine.text + currentLineText[this.currentCharIndex];
-        
-        if (this.currentLineIndex < this.typedLines.length) {
-          this.typedLines = this.typedLines.map((l, i) => 
-            i === this.currentLineIndex ? { ...l, text: newText } : l
-          );
-        } else {
-          this.typedLines = [...this.typedLines, { text: newText, class: currentLine.class }];
-        }
-        
+      const currentSeg = this.fullSegments[this.currentSegIndex];
+
+      if (currentSeg.text === '\n') {
+        this.typedSegments = [...this.typedSegments, NL];
+        this.currentSegIndex++;
+        this.currentCharIndex = 0;
+        this.cdr.markForCheck();
+        setTimeout(() => typeNextChar(), this.getDelayAfterNewline());
+        return;
+      }
+
+      if (this.currentCharIndex < currentSeg.text.length) {
         this.currentCharIndex++;
+        const partial = { text: currentSeg.text.slice(0, this.currentCharIndex), class: currentSeg.class };
+
+        if (this.currentCharIndex === 1) {
+          this.typedSegments = [...this.typedSegments, partial];
+        } else {
+          this.typedSegments = this.typedSegments.map((s, i) =>
+            i === this.typedSegments.length - 1 ? partial : s
+          );
+        }
+
         this.cdr.markForCheck();
         setTimeout(() => typeNextChar(), this.charDelay);
         return;
       }
 
-      this.currentLineIndex++;
+      this.currentSegIndex++;
       this.currentCharIndex = 0;
-
-      if (this.currentLineIndex < this.fullCode.length) {
-        setTimeout(() => typeNextChar(), this.getDelayForLine(this.currentLineIndex));
-      } else {
-        this.isTypingComplete = true;
-      }
+      setTimeout(() => typeNextChar(), 0);
     };
 
     typeNextChar();
   }
 
-  private getDelayForLine(lineIndex: number): number {
-    const line = this.fullCode[lineIndex];
-    if (line.text === '') return this.lineDelays.empty;
-    if (line.text.startsWith('class ') || line.text.startsWith('def ')) return this.lineDelays.keyword;
-    if (line.text.startsWith('#')) return this.lineDelays.comment;
+  private getDelayAfterNewline(): number {
+    // peek at the first segment of the next line to decide delay
+    let i = this.currentSegIndex;
+    while (i < this.fullSegments.length && this.fullSegments[i].text === '\n') i++;
+    if (i >= this.fullSegments.length) return this.lineDelays.empty;
+    const nextText = this.fullSegments[i].text;
+    if (nextText === '') return this.lineDelays.empty;
+    if (nextText === 'class' || nextText === '  ' && this.fullSegments[i + 1]?.text === 'def') return this.lineDelays.keyword;
+    if (nextText.startsWith('#')) return this.lineDelays.comment;
     return this.lineDelays.default;
   }
 }

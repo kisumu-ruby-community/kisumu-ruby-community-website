@@ -90,8 +90,7 @@
           </div>
 
           <!-- Code -->
-          <pre class="overflow-x-auto p-5 text-sm leading-relaxed font-mono lg:p-6" role="presentation"><code>@for (line of typedLines; track $index) {<span [class]="line.class || 'text-white'">{{ line.text }}</span>
-}@if (!isTypingComplete) {<span class="animate-pulse inline-block h-4 w-2 bg-primary align-middle"></span>}</code></pre>
+          <pre class="overflow-x-auto p-5 text-sm leading-relaxed font-mono lg:p-6" role="presentation"><code>@for (s of typedSegments; track $index) {<span [class]="s.class">{{ s.text }}</span>}@if (!isTypingComplete) {<span class="animate-pulse inline-block h-4 w-2 bg-primary align-middle"></span>}</code></pre>
 
         </div>
       </div>

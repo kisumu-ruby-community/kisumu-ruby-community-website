@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import {
   LucideAngularModule,
   LucideIconProvider,
@@ -9,6 +8,8 @@ import {
   Users,
   Zap,
 } from 'lucide-angular';
+import { ContactComponent } from '../contact/contact';
+import { AboutComponent } from '../about/about';
 
 interface Stat {
   value: string;
@@ -28,7 +29,7 @@ const NL: CodeSegment = { text: '\n', class: '' };
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, LucideAngularModule],
+  imports: [LucideAngularModule, ContactComponent, AboutComponent],
   providers: [
     {
       provide: LUCIDE_ICONS,
@@ -54,7 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected typedSegments: CodeSegment[] = [];
   private fullSegments: CodeSegment[] = [
     seg('# Kisumu Ruby Community', 'text-slate-500'), NL,
-    seg('# Kisumu, Kenya — est. 2026', 'text-slate-500'), NL,
+    seg('# Kisumu, Kenya - est. 2026', 'text-slate-500'), NL,
     NL,
     seg('class', 'text-violet-400'), seg(' ', 'text-white'), seg('KisumuRuby', 'text-amber-300'), NL,
     seg('  ', 'text-white'), seg('attr_reader', 'text-violet-400'), seg(' ', 'text-white'), seg(':members', 'text-sky-300'), seg(', ', 'text-white'), seg(':city', 'text-sky-300'), NL,

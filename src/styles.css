@@ -353,3 +353,18 @@ pre,
 samp {
   font-family: 'Space Mono', ui-monospace, 'Cascadia Code', monospace;
 }
+
+@keyframes page-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-slide-up 0.25s ease-out forwards;
+}

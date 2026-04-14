@@ -65,7 +65,7 @@ export class ContactComponent {
 
   protected readonly communityLinks = [
     { label: 'WhatsApp', description: 'Join our WhatsApp channel', href: 'https://chat.whatsapp.com/GpNl9qryNzPCzNLnLWyfBP', color: 'bg-green-600 hover:bg-green-700' },
-    { label: 'Discord', description: 'Join our Discord server', href: '#', color: 'bg-[#5865F2] hover:bg-[#4752c4]' },
+    { label: 'Discord', description: 'Join our Discord server', href: 'https://discord.gg/gA49HjpwC', color: 'bg-[#5865F2] hover:bg-[#4752c4]' },
   ];
 
   protected readonly talkFormats = ['Lightning Talk (5–10 min)', 'Full Talk (30 min)', 'Workshop (60–90 min)', 'Panel Discussion'];

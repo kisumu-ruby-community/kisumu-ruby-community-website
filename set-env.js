@@ -5,8 +5,10 @@ const proposalUrl = process.env.PROPOSAL_URL;
 
 const content = `export const environment = {
   production: true,
-  contactUrl: '${contactUrl}',
-  proposalUrl: '${proposalUrl}',
+  formspree: {
+    contactUrl: '${contactUrl}',
+    proposalUrl: '${proposalUrl}',
+  },
 };\n`;
 
 fs.mkdirSync('src/environments', { recursive: true });

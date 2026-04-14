@@ -1,0 +1,121 @@
+<footer role="contentinfo" class="bg-bg-subtle border-t border-border mt-auto">
+
+  <!-- ── Main footer grid ── -->
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+
+      <!-- ── Brand column ── -->
+      <div class="lg:col-span-2 space-y-4">
+        <!-- Logo -->
+        <a
+          routerLink="/"
+          class="inline-flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm"
+          aria-label="Kisumu Ruby Community — Go to homepage"
+        >
+          <img src="assets/logo/KRC-1.png" alt="Kisumu Ruby Community" class="h-18 w-auto" />
+        </a>
+
+        <!-- Tagline & description -->
+        <p class="text-sm leading-relaxed text-foreground-muted max-w-xs">
+          A thriving community of Ruby and Rails developers based in Kisumu, Kenya.
+          We learn, build, and grow together, one gem at a time.
+        </p>
+
+        <!-- Location -->
+        <p class="flex items-center gap-1.5 text-sm text-foreground-subtle">
+          <lucide-angular
+            [img]="mapPinIcon"
+            class="h-3.5 w-3.5 flex-shrink-0"
+            aria-hidden="true"
+          />
+          Kisumu, Kenya
+        </p>
+      </div>
+
+      <!-- ── Explore column ── -->
+      <div class="space-y-4">
+        <h3 class="text-xs font-semibold uppercase tracking-widest text-foreground-subtle">
+          Explore
+        </h3>
+        <ul role="list" class="space-y-2.5">
+          @for (link of exploreLinks; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                class="text-sm text-foreground-muted hover:text-primary transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded-sm"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- ── Community column ── -->
+      <div class="space-y-4">
+        <h3 class="text-xs font-semibold uppercase tracking-widest text-foreground-subtle">
+          Community
+        </h3>
+        <ul role="list" class="space-y-2.5">
+          @for (link of communityLinks; track link.href) {
+            <li>
+              @if (link.href.startsWith('http') || link.href.startsWith('mailto') || link.href === '#') {
+                <a
+                  [href]="link.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-sm text-foreground-muted hover:text-primary transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded-sm"
+                >
+                  {{ link.label }}
+                  <lucide-angular
+                    [img]="externalLinkIcon"
+                    class="h-3 w-3 flex-shrink-0 opacity-60"
+                    aria-hidden="true"
+                  />
+                </a>
+              } @else {
+                <a
+                  [routerLink]="link.href"
+                  class="text-sm text-foreground-muted hover:text-primary transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded-sm"
+                >
+                  {{ link.label }}
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Bottom bar ── -->
+  <div class="border-t border-border">
+    <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+
+      <!-- Copyright -->
+      <p class="text-sm text-foreground-subtle flex items-center gap-1 flex-wrap justify-center sm:justify-start">
+        <span>© {{ currentYear }} Kisumu Ruby Community</span>
+      </p>
+
+      <!-- Social icons -->
+      <ul role="list" class="flex items-center gap-1">
+        @for (social of socialLinks; track social.href) {
+          <li>
+            <a
+              [href]="social.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="social.label + ' (opens in new tab)'"
+              class="flex h-8 w-8 items-center justify-center rounded-md text-foreground-subtle hover:text-primary hover:bg-primary-muted transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <lucide-angular [img]="social.icon" class="h-4 w-4" aria-hidden="true" />
+            </a>
+          </li>
+        }
+      </ul>
+
+    </div>
+  </div>
+
+</footer>

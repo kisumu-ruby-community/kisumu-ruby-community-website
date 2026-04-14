@@ -1,0 +1,104 @@
+<header
+  role="banner"
+  class="fixed top-0 left-0 right-0 z-50 w-full bg-bg/95 backdrop-blur-sm border-b transition-all duration-200"
+  [class.shadow-sm]="isScrolled()"
+  [style.border-color]="isScrolled() ? 'var(--color-border)' : 'transparent'"
+>
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+    <nav aria-label="Main navigation" class="flex h-16 items-center justify-between">
+
+      <!-- ── Logo ── -->
+        <a
+          routerLink="/"
+          class="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm"
+          aria-label="Kisumu Ruby Community — Go to homepage"
+        >
+          <img src="assets/logo/KRC-1.png" alt="Kisumu Ruby Community" class="h-18 w-auto" />
+        </a>
+
+      <!-- ── Desktop navigation ── -->
+      <ul role="list" class="hidden lg:flex items-center gap-0.5">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="nav-link-active"
+              [routerLinkActiveOptions]="{ exact: link.exact }"
+              class="px-3 py-2 rounded-md text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <!-- ── Right-side actions ── -->
+      <div class="flex items-center gap-2">
+
+        <!-- Join Community CTA (desktop only) -->
+        <a
+          routerLink="/contact"
+          class="hidden lg:inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          Join Community
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+          #menuButton
+          type="button"
+          class="lg:hidden rounded-md p-2 text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          (click)="toggleMenu()"
+          [attr.aria-expanded]="isMenuOpen()"
+          aria-controls="mobile-navigation"
+          [attr.aria-label]="isMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
+        >
+          @if (isMenuOpen()) {
+            <lucide-angular [img]="xIcon" class="h-5 w-5" aria-hidden="true" />
+          } @else {
+            <lucide-angular [img]="menuIcon" class="h-5 w-5" aria-hidden="true" />
+          }
+        </button>
+
+      </div>
+    </nav>
+  </div>
+
+  <!-- ── Mobile navigation drawer (75 % width, right-anchored) ── -->
+  @if (isMenuOpen()) {
+    <div
+      id="mobile-navigation"
+      #mobileMenu
+      role="dialog"
+      aria-modal="false"
+      aria-label="Navigation menu"
+      class="lg:hidden absolute right-0 top-full w-[75vw] bg-bg border border-border shadow-xl rounded-bl-xl px-4 pb-5 pt-3 animate-slide-down overflow-y-auto max-h-[calc(100vh-4rem)]"
+    >
+      <ul role="list" class="space-y-0.5">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="nav-link-active"
+              [routerLinkActiveOptions]="{ exact: link.exact }"
+              class="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              (click)="closeMenu()"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-border">
+        <a
+          routerLink="/contact"
+          class="flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          (click)="closeMenu()"
+        >
+          Join Community
+        </a>
+      </div>
+    </div>
+  }
+</header>

@@ -1,0 +1,27 @@
+@if (notificationService.notification(); as n) {
+  <div
+    class="toast fixed right-4 top-[4.5rem] z-[70] flex max-w-[50%] items-start gap-3 rounded-lg border px-4 py-3 shadow-lg sm:max-w-xs"
+    role="alert"
+    aria-live="assertive"
+    [class]="n.type === 'success'
+      ? 'border-[var(--color-success-border)] bg-[var(--color-success-bg)] text-[var(--color-success-foreground)]'
+      : 'border-[var(--color-error-border)] bg-[var(--color-error-bg)] text-[var(--color-error-foreground)]'"
+  >
+    @if (n.type === 'success') {
+      <lucide-angular [img]="checkCircleIcon" class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+    } @else {
+      <lucide-angular [img]="alertTriangleIcon" class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+    }
+
+    <p class="flex-1 text-sm font-medium leading-snug">{{ n.message }}</p>
+
+    <button
+      type="button"
+      (click)="notificationService.dismiss()"
+      aria-label="Dismiss notification"
+      class="shrink-0 rounded p-0.5 opacity-60 transition-opacity duration-150 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current cursor-pointer"
+    >
+      <lucide-angular [img]="xIcon" class="h-3.5 w-3.5" aria-hidden="true" />
+    </button>
+  </div>
+}

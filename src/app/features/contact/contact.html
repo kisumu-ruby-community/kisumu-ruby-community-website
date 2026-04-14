@@ -1,0 +1,269 @@
+<!-- ── Page header ── -->
+<section class="relative overflow-hidden bg-bg border-b border-border">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-40"
+    aria-hidden="true"
+  ></div>
+  <div class="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-14 sm:py-18">
+    <h1
+      class="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl"
+      style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
+    >
+      Contact &amp; Join
+    </h1>
+    <p class="mt-4 text-lg text-foreground-muted max-w-xl">
+      Join the community, send us a message, or propose a talk. The community would love to hear from you.
+    </p>
+  </div>
+</section>
+
+<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-14 sm:py-18">
+  <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+
+    <!-- ── Left column ── -->
+    <div class="space-y-12">
+
+      <!-- Join links -->
+      <div>
+        <h2 class="text-xl font-bold text-foreground mb-6" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
+          Join the Community
+        </h2>
+        <div class="flex flex-col gap-3">
+          @for (link of communityLinks; track link.label) {
+            <a
+              [href]="link.href" target="_blank" rel="noopener noreferrer"
+              class="flex items-center justify-between rounded-xl px-5 py-4 text-white transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer {{ link.color }}"
+            >
+              <div>
+                <p class="font-semibold text-sm">{{ link.label }}</p>
+                <p class="text-xs opacity-80 mt-0.5">{{ link.description }}</p>
+              </div>
+              <lucide-angular [img]="externalLinkIcon" class="h-4 w-4 opacity-70" aria-hidden="true" />
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <div>
+        <h2 class="text-xl font-bold text-foreground mb-6" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
+          Send a Message
+        </h2>
+        <form (ngSubmit)="submitContact()" novalidate class="space-y-4">
+
+          <div>
+            <label for="contact-name" class="block text-sm font-medium text-foreground mb-1.5">
+              Name <span class="text-primary" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="contact-name" type="text" name="name"
+              [(ngModel)]="contact.name"
+              (blur)="onContactBlur('name')"
+              (ngModelChange)="onContactChange('name')"
+              autocomplete="name"
+              [attr.aria-describedby]="contactErrors.name ? 'contact-name-error' : null"
+              [attr.aria-invalid]="!!contactErrors.name"
+              class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+              [class.border-red-500]="contactErrors.name" [class.border-border]="!contactErrors.name"
+              placeholder="Your name"
+            />
+            @if (contactErrors.name) {
+              <p id="contact-name-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ contactErrors.name }}</p>
+            }
+          </div>
+
+          <div>
+            <label for="contact-email" class="block text-sm font-medium text-foreground mb-1.5">
+              Email <span class="text-primary" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="contact-email" type="email" name="email"
+              [(ngModel)]="contact.email"
+              (blur)="onContactBlur('email')"
+              (ngModelChange)="onContactChange('email')"
+              autocomplete="email"
+              [attr.aria-describedby]="contactErrors.email ? 'contact-email-error' : null"
+              [attr.aria-invalid]="!!contactErrors.email"
+              class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+              [class.border-red-500]="contactErrors.email" [class.border-border]="!contactErrors.email"
+              placeholder="you@example.com"
+            />
+            @if (contactErrors.email) {
+              <p id="contact-email-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ contactErrors.email }}</p>
+            }
+          </div>
+
+          <div>
+            <label for="contact-message" class="block text-sm font-medium text-foreground mb-1.5">
+              Message <span class="text-primary" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="contact-message" name="message"
+              [(ngModel)]="contact.message"
+              (blur)="onContactBlur('message')"
+              (ngModelChange)="onContactChange('message')"
+              rows="4"
+              [attr.aria-describedby]="contactErrors.message ? 'contact-message-error' : null"
+              [attr.aria-invalid]="!!contactErrors.message"
+              class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none"
+              [class.border-red-500]="contactErrors.message" [class.border-border]="!contactErrors.message"
+              placeholder="What's on your mind?"
+            ></textarea>
+            @if (contactErrors.message) {
+              <p id="contact-message-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ contactErrors.message }}</p>
+            }
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="!contactValid || contactSubmitting()"
+            class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          >
+            @if (contactSubmitting()) {
+              <lucide-angular [img]="loaderIcon" class="h-4 w-4 animate-spin" aria-hidden="true" />
+              Sending…
+            } @else {
+              <lucide-angular [img]="sendIcon" class="h-4 w-4" aria-hidden="true" />
+              Send Message
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── Right column: Talk proposal ── -->
+    <div>
+      <h2 class="text-xl font-bold text-foreground mb-2" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
+        Propose a Talk
+      </h2>
+      <p class="text-sm text-foreground-muted mb-6">
+        Got something to share with the community? We welcome talks, workshops, and lightning sessions on Ruby, Rails, and anything in the ecosystem.
+      </p>
+
+      <form (ngSubmit)="submitProposal()" novalidate class="space-y-4">
+
+        <div>
+          <label for="proposal-name" class="block text-sm font-medium text-foreground mb-1.5">
+            Name <span class="text-primary" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="proposal-name" type="text" name="proposalName"
+            [(ngModel)]="proposal.name"
+            (blur)="onProposalBlur('name')"
+            (ngModelChange)="onProposalChange('name')"
+            autocomplete="name"
+            [attr.aria-describedby]="proposalErrors.name ? 'proposal-name-error' : null"
+            [attr.aria-invalid]="!!proposalErrors.name"
+            class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+            [class.border-red-500]="proposalErrors.name" [class.border-border]="!proposalErrors.name"
+            placeholder="Your name"
+          />
+          @if (proposalErrors.name) {
+            <p id="proposal-name-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ proposalErrors.name }}</p>
+          }
+        </div>
+
+        <div>
+          <label for="proposal-email" class="block text-sm font-medium text-foreground mb-1.5">
+            Email <span class="text-primary" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="proposal-email" type="email" name="proposalEmail"
+            [(ngModel)]="proposal.email"
+            (blur)="onProposalBlur('email')"
+            (ngModelChange)="onProposalChange('email')"
+            autocomplete="email"
+            [attr.aria-describedby]="proposalErrors.email ? 'proposal-email-error' : null"
+            [attr.aria-invalid]="!!proposalErrors.email"
+            class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+            [class.border-red-500]="proposalErrors.email" [class.border-border]="!proposalErrors.email"
+            placeholder="you@example.com"
+          />
+          @if (proposalErrors.email) {
+            <p id="proposal-email-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ proposalErrors.email }}</p>
+          }
+        </div>
+
+        <div>
+          <label for="proposal-topic" class="block text-sm font-medium text-foreground mb-1.5">
+            Talk Topic <span class="text-primary" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="proposal-topic" type="text" name="proposalTopic"
+            [(ngModel)]="proposal.topic"
+            (blur)="onProposalBlur('topic')"
+            (ngModelChange)="onProposalChange('topic')"
+            [attr.aria-describedby]="proposalErrors.topic ? 'proposal-topic-error' : null"
+            [attr.aria-invalid]="!!proposalErrors.topic"
+            class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+            [class.border-red-500]="proposalErrors.topic" [class.border-border]="!proposalErrors.topic"
+            placeholder="e.g. Building APIs with Rails 8"
+          />
+          @if (proposalErrors.topic) {
+            <p id="proposal-topic-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ proposalErrors.topic }}</p>
+          }
+        </div>
+
+        <div>
+          <label for="proposal-format" class="block text-sm font-medium text-foreground mb-1.5">
+            Format <span class="text-primary" aria-hidden="true">*</span>
+          </label>
+          <select
+            id="proposal-format" name="proposalFormat"
+            [(ngModel)]="proposal.format"
+            (blur)="onProposalBlur('format')"
+            (ngModelChange)="onProposalChange('format')"
+            [attr.aria-describedby]="proposalErrors.format ? 'proposal-format-error' : null"
+            [attr.aria-invalid]="!!proposalErrors.format"
+            class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors cursor-pointer"
+            [class.border-red-500]="proposalErrors.format" [class.border-border]="!proposalErrors.format"
+          >
+            <option value="" disabled>Select a format</option>
+            @for (fmt of talkFormats; track fmt) {
+              <option [value]="fmt">{{ fmt }}</option>
+            }
+          </select>
+          @if (proposalErrors.format) {
+            <p id="proposal-format-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ proposalErrors.format }}</p>
+          }
+        </div>
+
+        <div>
+          <label for="proposal-description" class="block text-sm font-medium text-foreground mb-1.5">
+            Description <span class="text-primary" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="proposal-description" name="proposalDescription"
+            [(ngModel)]="proposal.description"
+            (blur)="onProposalBlur('description')"
+            (ngModelChange)="onProposalChange('description')"
+            rows="4"
+            [attr.aria-describedby]="proposalErrors.description ? 'proposal-description-error' : null"
+            [attr.aria-invalid]="!!proposalErrors.description"
+            class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none"
+            [class.border-red-500]="proposalErrors.description" [class.border-border]="!proposalErrors.description"
+            placeholder="Brief description of what you'd like to cover and who it's for…"
+          ></textarea>
+          @if (proposalErrors.description) {
+            <p id="proposal-description-error" role="alert" class="mt-1.5 text-xs text-red-600">{{ proposalErrors.description }}</p>
+          }
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="!proposalValid || proposalSubmitting()"
+          class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          @if (proposalSubmitting()) {
+            <lucide-angular [img]="loaderIcon" class="h-4 w-4 animate-spin" aria-hidden="true" />
+            Submitting…
+          } @else {
+            <lucide-angular [img]="messageSquareIcon" class="h-4 w-4" aria-hidden="true" />
+            Submit Proposal
+          }
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>

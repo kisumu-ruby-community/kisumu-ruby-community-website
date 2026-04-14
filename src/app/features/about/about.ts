@@ -58,7 +58,7 @@ export class AboutComponent {
       name: 'Abraham King\'oo',
       role: 'Organizer',
       bio: 'Software Engineer. Passionate about Ruby and building developer communities in East Africa.',
-      initials: 'AM',
+      initials: 'AK',
     },
     {
       name: 'Paul Oguda',

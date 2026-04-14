@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, Gem, Menu, X } from 'lucide-angular';
+import { LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, Menu, X } from 'lucide-angular';
 
 interface NavLink {
   label: string;
@@ -21,7 +21,7 @@ interface NavLink {
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, RouterLinkActive, LucideAngularModule],
-  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ Gem, Menu, X }) }],
+  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ Menu, X }) }],
   templateUrl: './navbar.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -40,7 +40,6 @@ export class NavbarComponent {
   protected readonly isMenuOpen = signal(false);
   protected readonly isScrolled = signal(false);
 
-  protected readonly gemIcon = Gem;
   protected readonly menuIcon = Menu;
   protected readonly xIcon = X;
 

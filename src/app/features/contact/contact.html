@@ -26,18 +26,13 @@
 
       <!-- Join links -->
       <div>
-        <h2
-          class="text-xl font-bold text-foreground mb-6"
-          style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
-        >
+        <h2 class="text-xl font-bold text-foreground mb-6" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
           Join the Community
         </h2>
         <div class="flex flex-col gap-3">
           @for (link of communityLinks; track link.label) {
             <a
-              [href]="link.href"
-              target="_blank"
-              rel="noopener noreferrer"
+              [href]="link.href" target="_blank" rel="noopener noreferrer"
               class="flex items-center justify-between rounded-xl px-5 py-4 text-white transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer {{ link.color }}"
             >
               <div>
@@ -52,19 +47,21 @@
 
       <!-- Contact form -->
       <div>
-        <h2
-          class="text-xl font-bold text-foreground mb-6"
-          style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
-        >
+        <h2 class="text-xl font-bold text-foreground mb-6" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
           Send a Message
         </h2>
         <form (ngSubmit)="submitContact()" novalidate class="space-y-4">
+
           <div>
             <label for="contact-name" class="block text-sm font-medium text-foreground mb-1.5">
               Name <span class="text-primary" aria-hidden="true">*</span>
             </label>
             <input
-              id="contact-name" type="text" name="name" [(ngModel)]="contact.name" autocomplete="name"
+              id="contact-name" type="text" name="name"
+              [(ngModel)]="contact.name"
+              (blur)="onContactBlur('name')"
+              (ngModelChange)="onContactChange('name')"
+              autocomplete="name"
               [attr.aria-describedby]="contactErrors.name ? 'contact-name-error' : null"
               [attr.aria-invalid]="!!contactErrors.name"
               class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
@@ -81,7 +78,11 @@
               Email <span class="text-primary" aria-hidden="true">*</span>
             </label>
             <input
-              id="contact-email" type="email" name="email" [(ngModel)]="contact.email" autocomplete="email"
+              id="contact-email" type="email" name="email"
+              [(ngModel)]="contact.email"
+              (blur)="onContactBlur('email')"
+              (ngModelChange)="onContactChange('email')"
+              autocomplete="email"
               [attr.aria-describedby]="contactErrors.email ? 'contact-email-error' : null"
               [attr.aria-invalid]="!!contactErrors.email"
               class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
@@ -98,7 +99,11 @@
               Message <span class="text-primary" aria-hidden="true">*</span>
             </label>
             <textarea
-              id="contact-message" name="message" [(ngModel)]="contact.message" rows="4"
+              id="contact-message" name="message"
+              [(ngModel)]="contact.message"
+              (blur)="onContactBlur('message')"
+              (ngModelChange)="onContactChange('message')"
+              rows="4"
               [attr.aria-describedby]="contactErrors.message ? 'contact-message-error' : null"
               [attr.aria-invalid]="!!contactErrors.message"
               class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none"
@@ -129,10 +134,7 @@
 
     <!-- ── Right column: Talk proposal ── -->
     <div>
-      <h2
-        class="text-xl font-bold text-foreground mb-2"
-        style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
-      >
+      <h2 class="text-xl font-bold text-foreground mb-2" style="font-family: 'JetBrains Mono', 'Space Mono', monospace;">
         Propose a Talk
       </h2>
       <p class="text-sm text-foreground-muted mb-6">
@@ -140,12 +142,17 @@
       </p>
 
       <form (ngSubmit)="submitProposal()" novalidate class="space-y-4">
+
         <div>
           <label for="proposal-name" class="block text-sm font-medium text-foreground mb-1.5">
             Name <span class="text-primary" aria-hidden="true">*</span>
           </label>
           <input
-            id="proposal-name" type="text" name="proposalName" [(ngModel)]="proposal.name" autocomplete="name"
+            id="proposal-name" type="text" name="proposalName"
+            [(ngModel)]="proposal.name"
+            (blur)="onProposalBlur('name')"
+            (ngModelChange)="onProposalChange('name')"
+            autocomplete="name"
             [attr.aria-describedby]="proposalErrors.name ? 'proposal-name-error' : null"
             [attr.aria-invalid]="!!proposalErrors.name"
             class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
@@ -162,7 +169,11 @@
             Email <span class="text-primary" aria-hidden="true">*</span>
           </label>
           <input
-            id="proposal-email" type="email" name="proposalEmail" [(ngModel)]="proposal.email" autocomplete="email"
+            id="proposal-email" type="email" name="proposalEmail"
+            [(ngModel)]="proposal.email"
+            (blur)="onProposalBlur('email')"
+            (ngModelChange)="onProposalChange('email')"
+            autocomplete="email"
             [attr.aria-describedby]="proposalErrors.email ? 'proposal-email-error' : null"
             [attr.aria-invalid]="!!proposalErrors.email"
             class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
@@ -179,7 +190,10 @@
             Talk Topic <span class="text-primary" aria-hidden="true">*</span>
           </label>
           <input
-            id="proposal-topic" type="text" name="proposalTopic" [(ngModel)]="proposal.topic"
+            id="proposal-topic" type="text" name="proposalTopic"
+            [(ngModel)]="proposal.topic"
+            (blur)="onProposalBlur('topic')"
+            (ngModelChange)="onProposalChange('topic')"
             [attr.aria-describedby]="proposalErrors.topic ? 'proposal-topic-error' : null"
             [attr.aria-invalid]="!!proposalErrors.topic"
             class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
@@ -196,7 +210,10 @@
             Format <span class="text-primary" aria-hidden="true">*</span>
           </label>
           <select
-            id="proposal-format" name="proposalFormat" [(ngModel)]="proposal.format"
+            id="proposal-format" name="proposalFormat"
+            [(ngModel)]="proposal.format"
+            (blur)="onProposalBlur('format')"
+            (ngModelChange)="onProposalChange('format')"
             [attr.aria-describedby]="proposalErrors.format ? 'proposal-format-error' : null"
             [attr.aria-invalid]="!!proposalErrors.format"
             class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors cursor-pointer"
@@ -217,7 +234,11 @@
             Description <span class="text-primary" aria-hidden="true">*</span>
           </label>
           <textarea
-            id="proposal-description" name="proposalDescription" [(ngModel)]="proposal.description" rows="4"
+            id="proposal-description" name="proposalDescription"
+            [(ngModel)]="proposal.description"
+            (blur)="onProposalBlur('description')"
+            (ngModelChange)="onProposalChange('description')"
+            rows="4"
             [attr.aria-describedby]="proposalErrors.description ? 'proposal-description-error' : null"
             [attr.aria-invalid]="!!proposalErrors.description"
             class="w-full rounded-lg border bg-bg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none"

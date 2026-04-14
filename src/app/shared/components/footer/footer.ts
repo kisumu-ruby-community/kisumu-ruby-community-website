@@ -5,9 +5,7 @@ import {
   LucideIconProvider,
   LUCIDE_ICONS,
   ExternalLink,
-  Gem,
   Github,
-  Heart,
   Linkedin,
   Mail,
   MapPin,
@@ -37,7 +35,7 @@ interface SocialLink {
     {
       provide: LUCIDE_ICONS,
       multi: true,
-      useValue: new LucideIconProvider({ ExternalLink, Gem, Github, Heart, Linkedin, Mail, MapPin, Twitter }),
+      useValue: new LucideIconProvider({ ExternalLink, Github, Linkedin, Mail, MapPin, Twitter }),
     },
   ],
   templateUrl: './footer.html',
@@ -47,8 +45,6 @@ interface SocialLink {
 export class FooterComponent {
   protected readonly currentYear = new Date().getFullYear();
 
-  protected readonly gemIcon = Gem;
-  protected readonly heartIcon = Heart;
   protected readonly mapPinIcon = MapPin;
   protected readonly externalLinkIcon = ExternalLink;
 
@@ -63,17 +59,17 @@ export class FooterComponent {
   ];
 
   protected readonly communityLinks: CommunityLink[] = [
-    { label: 'WhatsApp Channel', href: '#' },
-    { label: 'Discord Server', href: '#' },
-    { label: 'GitHub Organisation', href: 'https://github.com' },
+    { label: 'WhatsApp Channel', href: 'https://chat.whatsapp.com/GpNl9qryNzPCzNLnLWyfBP' },
+    { label: 'Discord Server', href: 'https://discord.gg/gA49HjpwC' },
+    { label: 'GitHub Organisation', href: 'https://github.com/kisumu-ruby-community' },
     // { label: 'Submit a Talk', href: '/contact' },
     // { label: 'Newsletter', href: '/contact' },
   ];
 
   protected readonly socialLinks: SocialLink[] = [
-    { label: 'GitHub', href: 'https://github.com', icon: Github },
-    { label: 'Twitter / X', href: 'https://twitter.com', icon: Twitter },
-    { label: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
+    { label: 'GitHub', href: 'https://github.com/kisumu-ruby-community', icon: Github },
+    // { label: 'Twitter / X', href: 'https://twitter.com', icon: Twitter },
+    // { label: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
     // { label: 'Email', href: 'mailto:hello@kisumuruby.dev', icon: Mail },
   ];
 }

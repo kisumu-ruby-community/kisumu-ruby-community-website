@@ -5,7 +5,6 @@
     aria-hidden="true"
   ></div>
   <div class="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-14 sm:py-18">
-    <p class="text-sm font-semibold uppercase tracking-widest text-primary mb-3">Get Involved</p>
     <h1
       class="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl"
       style="font-family: 'JetBrains Mono', 'Space Mono', monospace;"
@@ -13,7 +12,7 @@
       Contact &amp; Join
     </h1>
     <p class="mt-4 text-lg text-foreground-muted max-w-xl">
-      Join the community, send us a message, or propose a talk — we'd love to hear from you.
+      Join the community, send us a message, or propose a talk. The community would love to hear from you.
     </p>
   </div>
 </section>
@@ -117,10 +116,10 @@
 
           <button
             type="submit"
-            [disabled]="!contactValid || contactSubmitting"
+            [disabled]="!contactValid || contactSubmitting()"
             class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            @if (contactSubmitting) {
+            @if (contactSubmitting()) {
               <lucide-angular [img]="loaderIcon" class="h-4 w-4 animate-spin" aria-hidden="true" />
               Sending…
             } @else {
@@ -252,10 +251,10 @@
 
         <button
           type="submit"
-          [disabled]="!proposalValid || proposalSubmitting"
+          [disabled]="!proposalValid || proposalSubmitting()"
           class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
-          @if (proposalSubmitting) {
+          @if (proposalSubmitting()) {
             <lucide-angular [img]="loaderIcon" class="h-4 w-4 animate-spin" aria-hidden="true" />
             Submitting…
           } @else {

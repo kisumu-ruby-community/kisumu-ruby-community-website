@@ -8,13 +8,13 @@
     <nav aria-label="Main navigation" class="flex h-16 items-center justify-between">
 
       <!-- ── Logo ── -->
-        <a
-          routerLink="/"
-          class="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm"
-          aria-label="Kisumu Ruby Community — Go to homepage"
-        >
-          <img src="assets/logo/KRC-1.png" alt="Kisumu Ruby Community" class="h-18 w-auto" />
-        </a>
+      <a
+        routerLink="/"
+        class="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm"
+        aria-label="Kisumu Ruby Community - Go to homepage"
+      >
+        <img src="assets/logo/KRC-1.png" alt="Kisumu Ruby Community" class="h-18 w-auto" />
+      </a>
 
       <!-- ── Desktop navigation ── -->
       <ul role="list" class="hidden lg:flex items-center gap-0.5">
@@ -24,7 +24,8 @@
               [routerLink]="link.path"
               routerLinkActive="nav-link-active"
               [routerLinkActiveOptions]="{ exact: link.exact }"
-              class="px-3 py-2 rounded-md text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              class="px-3 py-2 rounded-md text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+              (click)="navigate(link, $event)"
             >
               {{ link.label }}
             </a>
@@ -37,8 +38,8 @@
 
         <!-- Join Community CTA (desktop only) -->
         <a
-          routerLink="/contact"
-          class="hidden lg:inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          class="hidden lg:inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+          (click)="navigateCta($event)"
         >
           Join Community
         </a>
@@ -64,7 +65,7 @@
     </nav>
   </div>
 
-  <!-- ── Mobile navigation drawer (75 % width, right-anchored) ── -->
+  <!-- ── Mobile navigation drawer ── -->
   @if (isMenuOpen()) {
     <div
       id="mobile-navigation"
@@ -81,8 +82,8 @@
               [routerLink]="link.path"
               routerLinkActive="nav-link-active"
               [routerLinkActiveOptions]="{ exact: link.exact }"
-              class="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              (click)="closeMenu()"
+              class="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-bg-subtle transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+              (click)="navigate(link, $event); closeMenu()"
             >
               {{ link.label }}
             </a>
@@ -92,9 +93,8 @@
 
       <div class="mt-4 pt-4 border-t border-border">
         <a
-          routerLink="/contact"
-          class="flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          (click)="closeMenu()"
+          class="flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+          (click)="navigateCta($event); closeMenu()"
         >
           Join Community
         </a>

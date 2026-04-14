@@ -5,7 +5,7 @@
    All primitive color values. Referenced by semantic tokens.
    ═══════════════════════════════════════════════════════════ */
 :root {
-  /* ── Ruby scale (anchored at #CC342D — official Ruby language logo red) ── */
+  /* ── Ruby scale (anchored at #CC342D - official Ruby language logo red) ── */
   --ruby-50:  #fff1f1;
   --ruby-100: #ffe0df;
   --ruby-200: #ffc4c2;
@@ -46,7 +46,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SEMANTIC TOKENS — Light mode (default)
+   SEMANTIC TOKENS - Light mode (default)
    ═══════════════════════════════════════════════════════════ */
 :root {
   /* Primary (Ruby red) */
@@ -115,7 +115,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SEMANTIC TOKENS — Dark mode overrides
+   SEMANTIC TOKENS - Dark mode overrides
    ═══════════════════════════════════════════════════════════ */
 .dark {
   /* Primary (brighter ruby for dark surfaces) */
@@ -352,6 +352,10 @@ kbd,
 pre,
 samp {
   font-family: 'Space Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @keyframes page-slide-up {

@@ -9,13 +9,21 @@ import {
   signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+<<<<<<< HEAD
 import { RouterLink, RouterLinkActive } from '@angular/router';
+=======
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+>>>>>>> main
 import { LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, Menu, X } from 'lucide-angular';
 
 interface NavLink {
   label: string;
   path: string;
   exact: boolean;
+<<<<<<< HEAD
+=======
+  fragment?: string;
+>>>>>>> main
 }
 
 @Component({
@@ -33,6 +41,7 @@ export class NavbarComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject(ElementRef);
+  private readonly router = inject(Router);
 
   @ViewChild('menuButton') private readonly menuButtonRef?: ElementRef<HTMLButtonElement>;
   @ViewChild('mobileMenu') private readonly mobileMenuRef?: ElementRef<HTMLElement>;
@@ -45,13 +54,33 @@ export class NavbarComponent {
 
   protected readonly navLinks: NavLink[] = [
     { label: 'Home', path: '/', exact: true },
-    { label: 'About', path: '/about', exact: false },
-    // { label: 'Events', path: '/events', exact: false },
-    // { label: 'Blog', path: '/blog', exact: false },
-    // { label: 'Members', path: '/members', exact: false },
-    // { label: 'Resources', path: '/resources', exact: false },
-    { label: 'Contact', path: '/contact', exact: false },
+    { label: 'Contact', path: '/contact', exact: false, fragment: 'contact' },
+    { label: 'About', path: '/about', exact: false, fragment: 'about' },
   ];
+
+  protected navigate(link: NavLink, event: Event): void {
+    if (link.fragment && isPlatformBrowser(this.platformId)) {
+      const isHome = this.router.url === '/' || this.router.url.startsWith('/#');
+      if (isHome) {
+        event.preventDefault();
+        document.getElementById(link.fragment)?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    this.router.navigate([link.path]);
+  }
+
+  protected navigateCta(event: Event): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const isHome = this.router.url === '/' || this.router.url.startsWith('/#');
+      if (isHome) {
+        event.preventDefault();
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    this.router.navigate(['/contact']);
+  }
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {

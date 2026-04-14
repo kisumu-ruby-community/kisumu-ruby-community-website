@@ -1,59 +1,113 @@
-# KisumuRubyCommunityWebsite
+# Kisumu Ruby Community Website
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+Public-facing website for the Ruby developer community based in Kisumu, Kenya. Built with Angular 21, TailwindCSS, and Angular Universal (SSR).
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+| Layer | Technology |
+|---|---|
+| Framework | Angular 21 (Standalone Components) |
+| Styling | TailwindCSS v4 |
+| Icons | Lucide Angular |
+| Forms | Formspree |
+| SSR | Angular Universal |
+| Hosting | Vercel / Firebase Hosting |
+
+## Prerequisites
+
+- Node.js 20+
+- npm 10+
+- Angular CLI 21+
+
+```bash
+npm install -g @angular/cli
+```
+
+## Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/kisumu-ruby-community/kisumu-ruby-community-website.git
+cd kisumu-ruby-community-website
+
+# Install dependencies
+npm install
+```
+
+## Environment Configuration
+
+The app uses environment files for external service URLs. These are located in `src/environments/`.
+
+Copy the default and fill in your values:
+
+```
+src/environments/environment.ts       ← development
+src/environments/environment.prod.ts  ← production
+```
+
+Current environment variables:
+
+```ts
+export const environment = {
+  production: false,
+  formspree: {
+    contactUrl: 'https://formspree.io/f/<your-form-id>',
+    proposalUrl: 'https://formspree.io/f/<your-form-id>',
+  },
+};
+```
+
+> The Formspree endpoints handle the contact form and talk proposal form submissions. Set up your forms at [formspree.io](https://formspree.io).
+
+## Development
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
+Navigate to `http://localhost:4200/`. The app reloads automatically on file changes.
 
 ## Building
 
-To build the project run:
-
 ```bash
+# Production build
 ng build
+
+# Output is in dist/kisumu-ruby-community-website/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Project Structure
 
-## Running unit tests
+```
+src/
+├── app/
+│   ├── core/
+│   │   └── services/          # NotificationService
+│   ├── shared/
+│   │   └── components/        # Navbar, Footer, Notification
+│   ├── features/
+│   │   ├── home/              # Landing page
+│   │   ├── about/             # About page
+│   │   └── contact/           # Contact & join page
+│   ├── app.routes.ts
+│   ├── app.config.ts
+│   └── app.html
+├── environments/
+│   ├── environment.ts
+│   └── environment.prod.ts
+└── styles.css                 # Global styles & design tokens
+```
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Pages
+
+| Route | Description |
+|---|---|
+| `/` | Homepage with hero, typing animation, and community stats |
+| `/about` | Origin story, values, leadership, and join links |
+| `/contact` | Community join links, contact form, and talk proposal form |
+
+## Running Tests
 
 ```bash
 ng test
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

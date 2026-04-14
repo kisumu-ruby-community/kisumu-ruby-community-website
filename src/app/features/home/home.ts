@@ -91,6 +91,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  protected scrollTo(id: string, event: Event): void {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   private startTyping(): void {
     const typeNextChar = () => {
       if (this.currentSegIndex >= this.fullSegments.length) {

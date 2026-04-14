@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {
@@ -71,7 +71,7 @@ export class ContactComponent {
   protected readonly talkFormats = ['Lightning Talk (5–10 min)', 'Full Talk (30 min)', 'Workshop (60–90 min)', 'Panel Discussion'];
 
   // ── Contact form ──
-  protected contactSubmitting = false;
+  protected contactSubmitting = signal(false);
   protected contact: ContactForm = { name: '', email: '', message: '' };
   protected contactErrors: Partial<ContactForm> = {};
   protected contactTouched: Partial<Record<keyof ContactForm, boolean>> = {};
@@ -93,15 +93,15 @@ export class ContactComponent {
     this.contactTouched = { name: true, email: true, message: true };
     this.contactErrors = validateContact(this.contact);
     if (!this.contactValid) return;
-    this.contactSubmitting = true;
+    this.contactSubmitting.set(true);
     this.http.post(this.CONTACT_URL, this.contact, { headers: { Accept: 'application/json' } }).subscribe({
-      next: () => { this.contactSubmitting = false; this.notifications.success("Message sent! We'll get back to you soon."); this.contact = { name: '', email: '', message: '' }; this.contactTouched = {}; this.contactErrors = {}; },
-      error: () => { this.contactSubmitting = false; this.notifications.error('Something went wrong. Please try again.'); },
+      next: () => { this.contactSubmitting.set(false); this.notifications.success("Message sent! We'll get back to you soon."); this.contact = { name: '', email: '', message: '' }; this.contactTouched = {}; this.contactErrors = {}; },
+      error: () => { this.contactSubmitting.set(false); this.notifications.error('Something went wrong. Please try again.'); },
     });
   }
 
   // ── Proposal form ──
-  protected proposalSubmitting = false;
+  protected proposalSubmitting = signal(false);
   protected proposal: ProposalForm = { name: '', email: '', topic: '', description: '', format: '' };
   protected proposalErrors: Partial<ProposalForm> = {};
   protected proposalTouched: Partial<Record<keyof ProposalForm, boolean>> = {};
@@ -123,10 +123,10 @@ export class ContactComponent {
     this.proposalTouched = { name: true, email: true, topic: true, description: true, format: true };
     this.proposalErrors = validateProposal(this.proposal);
     if (!this.proposalValid) return;
-    this.proposalSubmitting = true;
+    this.proposalSubmitting.set(true);
     this.http.post(this.PROPOSAL_URL, this.proposal, { headers: { Accept: 'application/json' } }).subscribe({
-      next: () => { this.proposalSubmitting = false; this.notifications.success("Proposal submitted! We'll be in touch."); this.proposal = { name: '', email: '', topic: '', description: '', format: '' }; this.proposalTouched = {}; this.proposalErrors = {}; },
-      error: () => { this.proposalSubmitting = false; this.notifications.error('Something went wrong. Please try again.'); },
+      next: () => { this.proposalSubmitting.set(false); this.notifications.success("Proposal submitted! We'll be in touch."); this.proposal = { name: '', email: '', topic: '', description: '', format: '' }; this.proposalTouched = {}; this.proposalErrors = {}; },
+      error: () => { this.proposalSubmitting.set(false); this.notifications.error('Something went wrong. Please try again.'); },
     });
   }
 }
